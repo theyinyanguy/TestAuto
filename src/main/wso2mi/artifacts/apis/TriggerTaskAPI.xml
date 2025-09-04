@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api xmlns="http://ws.apache.org/ns/synapse" name="TriggerTaskAPI" context="/trigger">
+    <resource methods="POST" uri-template="/task">
+        <inSequence>
+            <log category="INFO">
+                <message>Triggering tewstAuto task manually</message>
+            </log>
+            <sequence key="tewstAutoSequence"/>
+            <payloadFactory media-type="json">
+                <format>
+                    {
+                        "status": "success",
+                        "message": "Task tewstAuto triggered successfully",
+                        "timestamp": "${formatDateTime(now(), "yyyy-MM-dd HH:mm:ss")}"
+                    }
+                </format>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <faultSequence>
+            <log category="ERROR">
+                <message>Error triggering task: ${props.synapse.ERROR_MESSAGE}</message>
+            </log>
+            <payloadFactory media-type="json">
+                <format>
+                    {
+                        "status": "error",
+                        "message": "Failed to trigger task",
+                        "error": "${props.synapse.ERROR_MESSAGE}"
+                    }
+                </format>
+            </payloadFactory>
+            <respond/>
+        </faultSequence>
+    </resource>
+</api>
