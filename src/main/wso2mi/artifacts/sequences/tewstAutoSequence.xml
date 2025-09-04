@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="tewstAutoSequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log category="INFO">
+        <message>Automated task executed at ${formatDateTime(now(), "yyyy-MM-dd HH:mm:ss")}</message>
+    </log>
+</sequence>
